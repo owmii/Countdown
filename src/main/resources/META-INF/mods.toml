@@ -1,0 +1,25 @@
+modLoader="javafml" 
+loaderVersion="[28,)"
+
+[[mods]]
+modId="countdown"
+version="${file.jarVersion}"
+displayName="Countdown"
+authors="xieao"
+description='''
+Countdown.
+'''
+
+#[[dependencies.theora]]
+#    modId="lollipop"
+#    mandatory=true
+#    versionRange="[0.0.1,)"
+#    ordering="NONE"
+#    side="BOTH"
+
+[[dependencies.theora]]
+    modId="forge"
+    mandatory=true
+    versionRange="[28.1.56,)"
+    ordering="NONE"
+    side="BOTH"
