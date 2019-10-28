@@ -18,12 +18,10 @@ import static xieao.countdown.config.Config.GENERAL;
 
 @Mod.EventBusSubscriber
 public class EventHandler {
-
     //TODO slowdown
     //TODO pause
     //TODO time +
     //TODO curses
-
 
     @SubscribeEvent
     public static void loggedIn(PlayerEvent.PlayerLoggedInEvent event) {
@@ -50,7 +48,6 @@ public class EventHandler {
                         long time = timeData.playersTime.get(id);
                         if (time > 0 && player.world.getGameTime() % 20 == 0) {
                             timeData.setPlayerTime(id, time - 1, true);
-                            timeData.markDirty();
                         } else if (time <= 0) {
                             gameOver(player);
                         }
@@ -81,7 +78,6 @@ public class EventHandler {
                 Server.getWorld(0).ifPresent(world -> {
                     if (world.getGameTime() % 20 == 0) {
                         timeData.setGlobalTime(time - 1, true);
-                        timeData.markDirty();
                     }
                 });
             }

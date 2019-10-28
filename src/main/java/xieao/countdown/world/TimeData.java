@@ -2,6 +2,7 @@ package xieao.countdown.world;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.world.GameType;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -10,6 +11,7 @@ import xieao.countdown.config.Config;
 import xieao.countdown.network.packet.SetTime;
 import xieao.lib.Lollipop;
 import xieao.lib.util.Player;
+import xieao.lib.util.Server;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -37,9 +39,13 @@ public class TimeData extends WorldSavedData {
 
     public void setPlayerTime(UUID id, long time, boolean sync) {
         this.playersTime.put(id, Math.min(time, MAX_TIME));
+        markDirty();
         if (sync) {
             Player.get(id).ifPresent(player -> {
                 Lollipop.NET.toClient(new SetTime(time), player);
+                if (time > 0 && player.isSpectator()) {
+                    player.setGameType(GameType.SURVIVAL);
+                }
             });
         }
     }
@@ -54,8 +60,14 @@ public class TimeData extends WorldSavedData {
 
     public void setGlobalTime(long time, boolean sync) {
         this.globalTime = Math.min(time, MAX_TIME);
+        markDirty();
         if (sync) {
             Lollipop.NET.toAll(new SetTime(time));
+            Server.get().getPlayerList().getPlayers().forEach(player -> {
+                if (time > 0 && player.isSpectator()) {
+                    player.setGameType(GameType.SURVIVAL);
+                }
+            });
         }
     }
 
