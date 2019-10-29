@@ -1,4 +1,4 @@
-package xieao.countdown.command;
+package xieao.countdown.command.impl;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import net.minecraft.command.CommandSource;

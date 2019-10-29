@@ -2,6 +2,7 @@ package xieao.countdown.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -9,11 +10,14 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
+import xieao.countdown.client.gui.HudSettingScreen;
+import xieao.countdown.config.HudSettings;
 import xieao.lib.util.Time;
 
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class HudHandler {
+    public static final KeyBinding KEY = new KeyBinding("keybind.hud.settings", 67, "Countdown");
     public static int color = 0xffffff;
     public static int ticks;
     public static long time;
@@ -31,18 +35,23 @@ public class HudHandler {
                 }
                 ticks++;
             }
+            if (KEY.isPressed()) {
+                Minecraft.getInstance().displayGuiScreen(new HudSettingScreen());
+            }
         }
     }
 
     @SubscribeEvent
     public static void renderTime(RenderGameOverlayEvent.Pre event) {
+        if (!HudSettings.hudVisiblity()) return;
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.currentScreen != null) return;
         if (event.getType() == RenderGameOverlayEvent.ElementType.HELMET) {
-            Minecraft mc = Minecraft.getInstance();
             FontRenderer fr = mc.fontRenderer;
             int width = event.getWindow().getScaledWidth();
             int height = event.getWindow().getScaledHeight();
             String s = Time.secToDHMS(time);
-            fr.drawString(s, width - fr.getStringWidth(s) - 4, 4, color);
+            fr.drawString(s, (float) (width - fr.getStringWidth(s) - 4 + HudSettings.getHudX()), (float) (4 + HudSettings.getHudY()), color);
         }
     }
 }

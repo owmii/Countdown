@@ -1,4 +1,4 @@
-package xieao.countdown.command;
+package xieao.countdown.command.impl;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
@@ -13,7 +13,7 @@ import xieao.countdown.config.Config;
 import xieao.countdown.world.TimeData;
 import xieao.lib.util.Server;
 
-public class SubEditeTime {
+public class SubTime {
     public static ArgumentBuilder<CommandSource, ?> register() {
         return Commands.literal("time")
                 .requires(cs -> cs.hasPermissionLevel(2))
@@ -46,7 +46,7 @@ public class SubEditeTime {
                                         })
                                 ))
                 )
-                .then(Commands.literal("set")
+                .then(Commands.literal("load")
                         .then(Commands.argument("player", EntityArgument.player())
                                 .then(Commands.argument("seconds", IntegerArgumentType.integer(0, TimeData.MAX_TIME))
                                         .executes(context -> {
@@ -56,8 +56,8 @@ public class SubEditeTime {
                                                 int i = IntegerArgumentType.getInteger(context, "seconds");
                                                 timeData.setPlayerTime(player.getUniqueID(), i, true);
                                             } else {
-                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "You can't set time to a single player in globale mode!"));
-                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "try: /countdown set all <seconds>"));
+                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "You can't load time to a single player in globale mode!"));
+                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "try: /countdown load all <seconds>"));
                                             }
                                             return 0;
                                         })

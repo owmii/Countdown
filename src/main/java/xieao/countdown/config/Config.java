@@ -15,7 +15,9 @@ public class Config {
         this.isGlobal = builder.comment(
                 "If true all players will have the same countdown.",
                 "If false each player will have its own countdown.").define("isGlobal", false);
-        this.time = builder.comment(" ", "How many seconds.", "Default: 1800 (30 min) max: " + TimeData.MAX_TIME + " (1 year).").defineInRange("seconds", 1800L, 1L, TimeData.MAX_TIME);
+        this.time = builder.comment(
+                " ", "How many seconds.",
+                "Default: 1800 (30 min) max: " + TimeData.MAX_TIME + " (1 year).").defineInRange("seconds", 1800L, 1L, TimeData.MAX_TIME);
     }
 
     static {
