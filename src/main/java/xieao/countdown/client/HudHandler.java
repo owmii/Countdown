@@ -27,6 +27,7 @@ public class HudHandler {
     public static int color = 0xb2b3b2;
     public static int ticks;
     public static long time;
+    public static boolean[] potionFlags = new boolean[2];
 
     @SubscribeEvent
     public static void clientTicks(TickEvent.ClientTickEvent event) {
@@ -68,13 +69,13 @@ public class HudHandler {
         GlStateManager.enableRescaleNormal();
         GuiUtils.drawTexturedModalRect(0, 0, 0, 0, 200, 20, 0);
 
-        if (mc.player.isPotionActive(IEffects.SLOW_DOWN)) {
+        if (potionFlags[0] || mc.player.isPotionActive(IEffects.SLOW_DOWN)) {
             GlStateManager.pushMatrix();
             GlStateManager.translatef(4.0F, 3.5F, 0.0F);
             GuiUtils.drawTexturedModalRect(0, 0, 18, 20, 9, 12, 0);
             GlStateManager.popMatrix();
         }
-        if (mc.player.isPotionActive(IEffects.PAUSE)) {
+        if (potionFlags[1] || mc.player.isPotionActive(IEffects.PAUSE)) {
             GlStateManager.pushMatrix();
             GlStateManager.translatef(18.0F, 3.5F, 0.0F);
             GuiUtils.drawTexturedModalRect(0, 0, 27, 20, 37, 32, 0);
