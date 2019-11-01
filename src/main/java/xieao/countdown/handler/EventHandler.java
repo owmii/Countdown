@@ -2,13 +2,17 @@ package xieao.countdown.handler;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.GameType;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
+import xieao.countdown.api.event.CountdownEvent;
+import xieao.countdown.potion.IEffects;
 import xieao.countdown.world.TimeData;
 import xieao.lib.util.Server;
 
@@ -18,8 +22,6 @@ import static xieao.countdown.config.Config.GENERAL;
 
 @Mod.EventBusSubscriber
 public class EventHandler {
-    //TODO slowdown
-    //TODO pause
     //TODO time +
     //TODO curses
 
@@ -46,7 +48,20 @@ public class EventHandler {
                     UUID id = player.getUniqueID();
                     if (timeData.playersTime.containsKey(id)) {
                         long time = timeData.playersTime.get(id);
-                        if (time > 0 && player.world.getGameTime() % 20 == 0) {
+                        CountdownEvent.Player countdownEvent = new CountdownEvent.Player(player, time);
+                        MinecraftForge.EVENT_BUS.post(countdownEvent);
+                        time = countdownEvent.seconds;
+
+                        int speed = 20;
+                        if (time > 0 && player.isPotionActive(IEffects.PAUSE)) return;
+                        if (player.isPotionActive(IEffects.SLOW_DOWN)) {
+                            EffectInstance effectInstance = player.getActivePotionEffect(IEffects.SLOW_DOWN);
+                            if (effectInstance != null) {
+                                speed += (10 * effectInstance.getAmplifier() + 1);
+                            }
+                        }
+
+                        if (time > 0 && player.world.getGameTime() % speed == 0) {
                             timeData.setPlayerTime(id, time - 1, true);
                         } else if (time <= 0) {
                             gameOver(player);
@@ -74,10 +89,27 @@ public class EventHandler {
         TimeData timeData = Server.getData(TimeData::new);
         if (GENERAL.isGlobal.get()) {
             long time = timeData.globalTime;
+            CountdownEvent.Global countdownEvent = new CountdownEvent.Global(time);
+            MinecraftForge.EVENT_BUS.post(countdownEvent);
+            time = countdownEvent.seconds;
             if (time > 0 && Server.hasPlayers()) {
+                int speed = 20;
+
+                for (PlayerEntity player : Server.get().getPlayerList().getPlayers()) {
+                    if (player.isPotionActive(IEffects.PAUSE)) return;
+                    if (player.isPotionActive(IEffects.SLOW_DOWN)) {
+                        EffectInstance effectInstance = player.getActivePotionEffect(IEffects.SLOW_DOWN);
+                        if (effectInstance != null) {
+                            speed += (10 * effectInstance.getAmplifier() + 1);
+                        }
+                    }
+                }
+
+                long finalTime = time;
+                int finalSpeed = speed;
                 Server.getWorld(0).ifPresent(world -> {
-                    if (world.getGameTime() % 20 == 0) {
-                        timeData.setGlobalTime(time - 1, true);
+                    if (world.getGameTime() % finalSpeed == 0) {
+                        timeData.setGlobalTime(finalTime - 1, true);
                     }
                 });
             }

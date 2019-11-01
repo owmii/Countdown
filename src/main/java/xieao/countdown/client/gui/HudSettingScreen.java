@@ -1,18 +1,18 @@
 package xieao.countdown.client.gui;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.InputMappings;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import xieao.countdown.Countdown;
 import xieao.countdown.client.HudHandler;
 import xieao.countdown.config.HudSettings;
-import xieao.lib.util.Time;
 
 @OnlyIn(Dist.CLIENT)
 public class HudSettingScreen extends Screen {
+    public static final ResourceLocation MOVE_ICON = new ResourceLocation(Countdown.MOD_ID, "textures/gui/icons/move.png");
     public boolean visiblity;
     public double cdX;
     public double cdY;
@@ -32,10 +32,7 @@ public class HudSettingScreen extends Screen {
     public void render(int x, int y, float pt) {
         renderBackground();
         if (this.visiblity) {
-            Minecraft mc = Minecraft.getInstance();
-            FontRenderer fr = mc.fontRenderer;
-            String s = Time.secToDHMS(HudHandler.time);
-            fr.drawString(s, (float) (this.width - fr.getStringWidth(s) - 4 + this.cdX), (float) (4 + this.cdY), HudHandler.color);
+            HudHandler.renderClock((float) this.cdX + this.width, (float) this.cdY);
         }
         super.render(x, y, pt);
     }
