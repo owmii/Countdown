@@ -11,9 +11,11 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
+import xieao.countdown.api.TimeData;
 import xieao.countdown.api.event.CountdownEvent;
+import xieao.countdown.network.packet.SetTime;
 import xieao.countdown.potion.IEffects;
-import xieao.countdown.world.TimeData;
+import xieao.lib.Lollipop;
 import xieao.lib.util.Server;
 
 import java.util.UUID;
@@ -31,7 +33,7 @@ public class EventHandler {
             TimeData timeData = Server.getData(TimeData::new);
             if (!GENERAL.isGlobal.get()) {
                 UUID id = event.getPlayer().getUniqueID();
-                if (!timeData.playersTime.containsKey(id)) {
+                if (!timeData.playersCountdown.containsKey(id)) {
                     timeData.setPlayerTime(id, GENERAL.time.get(), true);
                 }
             }
@@ -46,12 +48,20 @@ public class EventHandler {
                 TimeData timeData = Server.getData(TimeData::new);
                 if (!GENERAL.isGlobal.get()) {
                     UUID id = player.getUniqueID();
-                    if (timeData.playersTime.containsKey(id)) {
-                        long time = timeData.playersTime.get(id);
+                    if (timeData.playersCountdown.containsKey(id)) {
+                        long time = timeData.playersCountdown.get(id);
+
+                        if (timeData.playerSync.contains(id)) {
+                            Lollipop.NET.toClient(new SetTime(time), player);
+                            timeData.playerSync.remove(id);
+                            if (time > 0 && player.isSpectator()) {
+                                player.setGameType(GameType.SURVIVAL);
+                            }
+                        }
+
                         CountdownEvent.Player countdownEvent = new CountdownEvent.Player(player, time);
                         MinecraftForge.EVENT_BUS.post(countdownEvent);
                         time = countdownEvent.seconds;
-
                         int speed = 20;
                         if (time > 0 && player.isPotionActive(IEffects.PAUSE)) return;
                         if (player.isPotionActive(IEffects.SLOW_DOWN)) {
@@ -67,7 +77,7 @@ public class EventHandler {
                             gameOver(player);
                         }
                     }
-                } else if (timeData.globalTime <= 0) {
+                } else if (timeData.globalCountdown <= 0) {
                     gameOver(player);
                 }
             }
@@ -86,9 +96,19 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void serverTick(TickEvent.ServerTickEvent event) {
-        TimeData timeData = Server.getData(TimeData::new);
         if (GENERAL.isGlobal.get()) {
-            long time = timeData.globalTime;
+            TimeData timeData = Server.getData(TimeData::new);
+            long time = timeData.globalCountdown;
+
+            if (timeData.globalSync) {
+                Lollipop.NET.toAll(new SetTime(time));
+                for (PlayerEntity player : Server.get().getPlayerList().getPlayers()) {
+                    if (player.isSpectator()) {
+                        player.setGameType(GameType.SURVIVAL);
+                    }
+                }
+            }
+
             CountdownEvent.Global countdownEvent = new CountdownEvent.Global(time);
             MinecraftForge.EVENT_BUS.post(countdownEvent);
             time = countdownEvent.seconds;

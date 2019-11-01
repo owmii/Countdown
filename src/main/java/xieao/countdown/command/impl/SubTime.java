@@ -9,8 +9,8 @@ import net.minecraft.command.arguments.EntitySelector;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import xieao.countdown.api.TimeData;
 import xieao.countdown.config.Config;
-import xieao.countdown.world.TimeData;
 import xieao.lib.util.Server;
 
 public class SubTime {
@@ -39,7 +39,7 @@ public class SubTime {
                                             int i = IntegerArgumentType.getInteger(context, "seconds");
                                             TimeData timeData = Server.getData(TimeData::new);
                                             timeData.addGlobalTime(i, true);
-                                            timeData.playersTime.forEach((uuid, aLong) -> {
+                                            timeData.playersCountdown.forEach((uuid, aLong) -> {
                                                 timeData.addPlayerTime(uuid, i, true);
                                             });
                                             return 0;
@@ -68,7 +68,7 @@ public class SubTime {
                                             int i = IntegerArgumentType.getInteger(context, "seconds");
                                             TimeData timeData = Server.getData(TimeData::new);
                                             timeData.setGlobalTime(i, true);
-                                            timeData.playersTime.forEach((uuid, aLong) -> {
+                                            timeData.playersCountdown.forEach((uuid, aLong) -> {
                                                 timeData.setPlayerTime(uuid, i, true);
                                             });
                                             return 0;

@@ -5,8 +5,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.loading.FMLPaths;
+import xieao.countdown.api.TimeData;
 import xieao.countdown.command.MainCommand;
 import xieao.countdown.config.Config;
 import xieao.countdown.config.HudSettings;
@@ -43,6 +45,10 @@ public class Countdown {
 
     void clientSetup(FMLClientSetupEvent event) {
         HudSettings.load();
+    }
+
+    void loadComplet(FMLLoadCompleteEvent event) {
+        TimeData.globalDefault = Config.GENERAL.time.get();
     }
 
     void serverStarting(FMLServerStartingEvent evt) {

@@ -2,7 +2,7 @@ package xieao.countdown.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
-import xieao.countdown.world.TimeData;
+import xieao.countdown.api.TimeData;
 
 public class Config {
     public static final Config GENERAL;

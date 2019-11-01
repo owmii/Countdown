@@ -8,8 +8,8 @@ import net.minecraft.command.arguments.EntitySelector;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import xieao.countdown.api.TimeData;
 import xieao.countdown.config.Config;
-import xieao.countdown.world.TimeData;
 import xieao.lib.util.Server;
 
 public class SubRestart {
@@ -21,7 +21,7 @@ public class SubRestart {
                             ServerPlayerEntity player = (ServerPlayerEntity) context.getArgument("player", EntitySelector.class).selectOne(context.getSource());
                             if (!Config.GENERAL.isGlobal.get()) {
                                 TimeData timeData = Server.getData(TimeData::new);
-                                timeData.playersTime.put(player.getUniqueID(), Config.GENERAL.time.get());
+                                timeData.playersCountdown.put(player.getUniqueID(), Config.GENERAL.time.get());
                             } else {
                                 player.sendMessage(new StringTextComponent(TextFormatting.RED + "You can't restart a single player in globale mode!"));
                                 player.sendMessage(new StringTextComponent(TextFormatting.RED + "try: /countdown restart all"));
@@ -31,9 +31,9 @@ public class SubRestart {
                 .then(Commands.literal("all")
                         .executes(context -> {
                             TimeData timeData = Server.getData(TimeData::new);
-                            timeData.globalTime = Config.GENERAL.time.get();
-                            timeData.playersTime.forEach((uuid, aLong) -> {
-                                timeData.playersTime.put(uuid, Config.GENERAL.time.get());
+                            timeData.globalCountdown = Config.GENERAL.time.get();
+                            timeData.playersCountdown.forEach((uuid, aLong) -> {
+                                timeData.playersCountdown.put(uuid, Config.GENERAL.time.get());
                             });
                             return 0;
                         }));
