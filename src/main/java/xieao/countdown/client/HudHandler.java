@@ -23,7 +23,7 @@ import xieao.lib.util.Time;
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class HudHandler {
     public static final ResourceLocation BACKGROUND = new ResourceLocation(Countdown.MOD_ID, "textures/gui/widgets.png");
-    public static final KeyBinding KEY = new KeyBinding("keybind.hud.settings", 67, "Countdown");
+    public static final KeyBinding KEY = new KeyBinding("keybind.hud.settings", 67, "category.countdown");
     public static int color = 0xb2b3b2;
     public static int ticks;
     public static long time;

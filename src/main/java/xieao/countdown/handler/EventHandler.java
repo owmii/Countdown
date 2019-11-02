@@ -72,7 +72,6 @@ public class EventHandler {
                         }
 
                         if (time > 0 && player.world.getGameTime() % speed == 0) {
-                            System.out.println(time);
                             timeData.addPlayerTime(id, -1, true);
                         } else if (time <= 0) {
                             gameOver(player);

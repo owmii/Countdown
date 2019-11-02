@@ -46,7 +46,6 @@ public class SetTime {
             if (msg.time > 10) {
                 HudHandler.color = 0xffffff;
             }
-            System.out.println(msg.time);
         });
         ctx.get().setPacketHandled(true);
     }
