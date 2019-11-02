@@ -37,7 +37,7 @@ public class CountdownEvent extends Event {
     }
 
     /**
-     * Event for when countdown time is ended and brfor the game is over.
+     * Event for when countdown time is ended and befor the game is over.
      * this event is server side only
      * <p>
      * If cancelled, the player will not set to spectator mode.

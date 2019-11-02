@@ -87,7 +87,7 @@ public class EventHandler {
     public static void gameOver(PlayerEntity player, long time) {
         if (player instanceof ServerPlayerEntity) {
             ServerPlayerEntity player1 = (ServerPlayerEntity) player;
-            CountdownEvent.Player countdownEvent = new CountdownEvent.GameOver(player, time);
+            CountdownEvent.GameOver countdownEvent = new CountdownEvent.GameOver(player, time);
             if (MinecraftForge.EVENT_BUS.post(countdownEvent)) return;
             if (!player1.isSpectator() && player1.interactionManager.getGameType() == GameType.SURVIVAL) {
                 player1.setGameType(GameType.SPECTATOR);
