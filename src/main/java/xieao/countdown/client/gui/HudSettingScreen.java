@@ -59,7 +59,7 @@ public class HudSettingScreen extends Screen {
     @Override
     public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
         InputMappings.Input mouseKey = InputMappings.getInputByCode(p_keyPressed_1_, p_keyPressed_2_);
-        if (this.minecraft != null && (p_keyPressed_1_ == 256 || HudHandler.KEY.isPressed() || this.minecraft.gameSettings.keyBindInventory.isActiveAndMatches(mouseKey))) {
+        if (this.minecraft != null && (p_keyPressed_1_ == 256 || p_keyPressed_1_ == 67 || this.minecraft.gameSettings.keyBindInventory.isActiveAndMatches(mouseKey))) {
             this.minecraft.player.closeScreen();
             return true;
         }

@@ -17,7 +17,6 @@ public class SetTime {
     }
 
     public static void encode(SetTime msg, PacketBuffer buffer) {
-        buffer.writeLong(msg.time);
         final boolean[] flags = new boolean[2];
         for (ServerPlayerEntity player : Server.get().getPlayerList().getPlayers()) {
             if (player.isPotionActive(IEffects.SLOW_DOWN)) {
@@ -32,6 +31,7 @@ public class SetTime {
         }
         buffer.writeBoolean(flags[0]);
         buffer.writeBoolean(flags[1]);
+        buffer.writeLong(msg.time);
     }
 
     public static SetTime decode(PacketBuffer buffer) {
@@ -46,6 +46,7 @@ public class SetTime {
             if (msg.time > 10) {
                 HudHandler.color = 0xffffff;
             }
+            System.out.println(msg.time);
         });
         ctx.get().setPacketHandled(true);
     }
