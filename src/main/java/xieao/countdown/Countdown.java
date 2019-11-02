@@ -13,6 +13,7 @@ import xieao.countdown.command.MainCommand;
 import xieao.countdown.config.Config;
 import xieao.countdown.config.HudSettings;
 import xieao.countdown.network.Packets;
+import xieao.countdown.potion.IPotions;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,6 +42,7 @@ public class Countdown {
 
     void commonSetup(FMLCommonSetupEvent event) {
         Packets.register();
+        IPotions.initBrew();
     }
 
     void clientSetup(FMLClientSetupEvent event) {

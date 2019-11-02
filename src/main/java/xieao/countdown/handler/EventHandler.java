@@ -1,8 +1,11 @@
 package xieao.countdown.handler;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.GameType;
 import net.minecraftforge.common.MinecraftForge;
@@ -24,9 +27,6 @@ import static xieao.countdown.config.Config.GENERAL;
 
 @Mod.EventBusSubscriber
 public class EventHandler {
-    //TODO time +
-    //TODO curses
-
     @SubscribeEvent
     public static void loggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getPlayer() instanceof ServerPlayerEntity) {
@@ -96,6 +96,7 @@ public class EventHandler {
             if (!player1.isSpectator() && player1.interactionManager.getGameType() == GameType.SURVIVAL) {
                 player1.setGameType(GameType.SPECTATOR);
                 player1.getServerWorld().getGameRules().get(GameRules.SPECTATORS_GENERATE_CHUNKS).set(false, player1.server);
+                player1.sendMessage(new StringTextComponent(TextFormatting.RED + I18n.format("message.countdown.gameover")));
             }
         }
     }

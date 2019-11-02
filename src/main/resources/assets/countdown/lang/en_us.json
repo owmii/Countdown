@@ -1,6 +1,7 @@
 {
   "effect.countdown.pause": "Pause",
   "effect.countdown.slow_down": "Slow Down",
+  "message.countdown.gameover": "Oops's, Game Over!! :(",
   "category.countdown": "Countdown",
   "keybind.hud.settings": "Hud Settings"
 }
