@@ -35,7 +35,11 @@ public class EventHandler {
                 UUID id = event.getPlayer().getUniqueID();
                 if (!timeData.playersCountdown.containsKey(id)) {
                     timeData.setPlayerTime(id, GENERAL.time.get(), true);
+                } else {
+                    timeData.playerSync.add(event.getPlayer().getUniqueID());
                 }
+            } else {
+                timeData.globalSync = true;
             }
         }
     }

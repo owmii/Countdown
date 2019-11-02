@@ -71,13 +71,13 @@ public class HudHandler {
 
         if (potionFlags[0] || mc.player.isPotionActive(IEffects.SLOW_DOWN)) {
             GlStateManager.pushMatrix();
-            GlStateManager.translatef(4.0F, 3.5F, 0.0F);
+            GlStateManager.translatef(4.0F, 4F, 0.0F);
             GuiUtils.drawTexturedModalRect(0, 0, 18, 20, 9, 12, 0);
             GlStateManager.popMatrix();
         }
         if (potionFlags[1] || mc.player.isPotionActive(IEffects.PAUSE)) {
             GlStateManager.pushMatrix();
-            GlStateManager.translatef(18.0F, 3.5F, 0.0F);
+            GlStateManager.translatef(18.0F, 4F, 0.0F);
             GuiUtils.drawTexturedModalRect(0, 0, 27, 20, 37, 32, 0);
             GlStateManager.popMatrix();
         }
