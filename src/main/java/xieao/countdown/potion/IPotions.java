@@ -16,9 +16,9 @@ import java.util.List;
 public class IPotions {
     public static final List<Potion> POTIONS = new ArrayList<>();
     public static final Potion PAUSE = register("pause", new Potion(new EffectInstance(IEffects.PAUSE, 12000)));
-    public static final Potion LONG_PAUSE = register("long_pause", new Potion(new EffectInstance(IEffects.PAUSE, 22000)));
+    public static final Potion LONG_PAUSE = register("long_pause", new Potion("pause", new EffectInstance(IEffects.PAUSE, 22000)));
     public static final Potion SLOW_DOWN = register("slow_down", new Potion(new EffectInstance(IEffects.SLOW_DOWN, 12000)));
-    public static final Potion LONG_SLOW_DOWN = register("long_slow_down", new Potion(new EffectInstance(IEffects.SLOW_DOWN, 22000)));
+    public static final Potion LONG_SLOW_DOWN = register("long_slow_down", new Potion("slow_down", new EffectInstance(IEffects.SLOW_DOWN, 22000)));
 
     public static void initBrew() {
         Brew.addMix(Potions.AWKWARD, Items.CLOCK, PAUSE);

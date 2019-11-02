@@ -1,6 +1,12 @@
 {
   "effect.countdown.pause": "Pause",
   "effect.countdown.slow_down": "Slow Down",
+  "item.minecraft.potion.effect.pause": "Pause Potion",
+  "item.minecraft.splash_potion.effect.pause": "Splash Pause Potion",
+  "item.minecraft.lingering_potion.effect.pause": "Lingering Pause Potion",
+  "item.minecraft.potion.effect.slow_down": "Slow Down Potion",
+  "item.minecraft.splash_potion.effect.slow_down": "Splash Slow Down Potion",
+  "item.minecraft.lingering_potion.effect.slow_down": "Lingering Slow Down Potion",
   "message.countdown.gameover": "Oops's, Game Over!! :(",
   "category.countdown": "Countdown",
   "keybind.hud.settings": "Hud Settings"
