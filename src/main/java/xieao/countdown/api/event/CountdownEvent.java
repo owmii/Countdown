@@ -1,6 +1,7 @@
 package xieao.countdown.api.event;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 
 public class CountdownEvent extends Event {
@@ -32,6 +33,19 @@ public class CountdownEvent extends Event {
     public static class Global extends CountdownEvent {
         public Global(long seconds) {
             super(seconds);
+        }
+    }
+
+    /**
+     * Event for when countdown time is ended and brfor the game is over.
+     * this event is server side only
+     * <p>
+     * If cancelled, the player will not set to spectator mode.
+     */
+    @Cancelable
+    public static class GameOver extends Player {
+        public GameOver(PlayerEntity player, long seconds) {
+            super(player, seconds);
         }
     }
 }

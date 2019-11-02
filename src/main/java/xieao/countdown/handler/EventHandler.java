@@ -74,19 +74,21 @@ public class EventHandler {
                         if (time > 0 && player.world.getGameTime() % speed == 0) {
                             timeData.addPlayerTime(id, -1, true);
                         } else if (time <= 0) {
-                            gameOver(player);
+                            gameOver(player, time);
                         }
                     }
                 } else if (timeData.globalCountdown <= 0) {
-                    gameOver(player);
+                    gameOver(player, timeData.globalCountdown);
                 }
             }
         }
     }
 
-    public static void gameOver(PlayerEntity player) {
+    public static void gameOver(PlayerEntity player, long time) {
         if (player instanceof ServerPlayerEntity) {
             ServerPlayerEntity player1 = (ServerPlayerEntity) player;
+            CountdownEvent.Player countdownEvent = new CountdownEvent.GameOver(player, time);
+            if (MinecraftForge.EVENT_BUS.post(countdownEvent)) return;
             if (!player1.isSpectator() && player1.interactionManager.getGameType() == GameType.SURVIVAL) {
                 player1.setGameType(GameType.SPECTATOR);
                 player1.getServerWorld().getGameRules().get(GameRules.SPECTATORS_GENERATE_CHUNKS).set(false, player1.server);
