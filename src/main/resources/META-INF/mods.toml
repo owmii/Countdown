@@ -7,19 +7,19 @@ version="${file.jarVersion}"
 displayName="Countdown"
 authors="xieao"
 description='''
-Countdown.
+Like hardcore but limited time instead of limited lifes.
 '''
 
-#[[dependencies.theora]]
+#[[dependencies.countdown]]
 #    modId="lollipop"
 #    mandatory=true
-#    versionRange="[0.0.1,)"
+#    versionRange="[0.0.2,)"
 #    ordering="NONE"
 #    side="BOTH"
 
-[[dependencies.theora]]
+[[dependencies.countdown]]
     modId="forge"
     mandatory=true
-    versionRange="[28.1.56,)"
+    versionRange="[28.1.80,)"
     ordering="NONE"
     side="BOTH"

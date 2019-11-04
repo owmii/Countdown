@@ -103,7 +103,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void serverTick(TickEvent.ServerTickEvent event) {
-        if (GENERAL.isGlobal.get()) {
+        if (GENERAL.isGlobal.get() && event.phase == TickEvent.Phase.START) {
             TimeData timeData = Server.getData(TimeData::new);
             long time = timeData.globalCountdown;
 
