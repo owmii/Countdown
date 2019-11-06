@@ -32,7 +32,7 @@ public class TimeData extends WorldSavedData {
     }
 
     public void setPlayerTime(UUID id, long time, boolean sync) {
-        this.playersCountdown.put(id, Math.min(time, MAX_TIME));
+        this.playersCountdown.put(id, Math.max(0, Math.min(time, MAX_TIME)));
         if (sync) {
             this.playerSync.add(id);
         }
@@ -48,7 +48,7 @@ public class TimeData extends WorldSavedData {
     }
 
     public void setGlobalTime(long time, boolean sync) {
-        this.globalCountdown = Math.min(time, MAX_TIME);
+        this.globalCountdown = Math.max(0, Math.min(time, MAX_TIME));
         this.globalSync = sync;
         markDirty();
     }

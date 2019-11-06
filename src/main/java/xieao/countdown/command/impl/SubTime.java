@@ -46,6 +46,35 @@ public class SubTime {
                                         })
                                 ))
                 )
+                .then(Commands.literal("remove")
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .then(Commands.argument("seconds", IntegerArgumentType.integer(0, TimeData.MAX_TIME))
+                                        .executes(context -> {
+                                            ServerPlayerEntity player = (ServerPlayerEntity) context.getArgument("player", EntitySelector.class).selectOne(context.getSource());
+                                            if (!Config.GENERAL.isGlobal.get()) {
+                                                TimeData timeData = Server.getData(TimeData::new);
+                                                int i = IntegerArgumentType.getInteger(context, "seconds");
+                                                timeData.addPlayerTime(player.getUniqueID(), -i, true);
+                                            } else {
+                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "You can't remove time to a single player in globale mode!"));
+                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "try: /countdown remove all <seconds>"));
+                                            }
+                                            return 0;
+                                        })
+                                ))
+                        .then(Commands.literal("all")
+                                .then(Commands.argument("seconds", IntegerArgumentType.integer(0, TimeData.MAX_TIME))
+                                        .executes(context -> {
+                                            int i = IntegerArgumentType.getInteger(context, "seconds");
+                                            TimeData timeData = Server.getData(TimeData::new);
+                                            timeData.addGlobalTime(-i, true);
+                                            timeData.playersCountdown.forEach((uuid, aLong) -> {
+                                                timeData.addPlayerTime(uuid, -i, true);
+                                            });
+                                            return 0;
+                                        })
+                                ))
+                )
                 .then(Commands.literal("set")
                         .then(Commands.argument("player", EntityArgument.player())
                                 .then(Commands.argument("seconds", IntegerArgumentType.integer(0, TimeData.MAX_TIME))

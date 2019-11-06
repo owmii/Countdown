@@ -110,7 +110,7 @@ public class EventHandler {
             if (timeData.globalSync) {
                 Lollipop.NET.toAll(new SetTime(time));
                 for (PlayerEntity player : Server.get().getPlayerList().getPlayers()) {
-                    if (player.isSpectator()) {
+                    if (time > 0 && player.isSpectator()) {
                         player.setGameType(GameType.SURVIVAL);
                     }
                 }
