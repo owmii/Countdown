@@ -46,7 +46,7 @@ public class SubTime {
                                         })
                                 ))
                 )
-                .then(Commands.literal("load")
+                .then(Commands.literal("set")
                         .then(Commands.argument("player", EntityArgument.player())
                                 .then(Commands.argument("seconds", IntegerArgumentType.integer(0, TimeData.MAX_TIME))
                                         .executes(context -> {
@@ -57,7 +57,7 @@ public class SubTime {
                                                 timeData.setPlayerTime(player.getUniqueID(), i, true);
                                             } else {
                                                 player.sendMessage(new StringTextComponent(TextFormatting.RED + "You can't load time to a single player in globale mode!"));
-                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "try: /countdown load all <seconds>"));
+                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "try: /countdown set all <seconds>"));
                                             }
                                             return 0;
                                         })
