@@ -111,12 +111,12 @@ public class SubTime {
                                             TimeData timeData = Server.getData(TimeData::new);
                                             if (Config.GENERAL.isGlobal.get()) {
                                                 timeData.setGlobalTime(i, true);
-                                                Server.chatToAll(new StringTextComponent(TextFormatting.AQUA + "Your countdown timer has been set to " + i + " seconds."));
+                                                Server.chatToAll(new StringTextComponent(TextFormatting.AQUA + "The global timer has been set to " + i + " seconds."));
                                             } else {
                                                 timeData.playersCountdown.forEach((uuid, aLong) -> {
                                                     timeData.setPlayerTime(uuid, i, true);
                                                 });
-                                                Server.chatToAll(new StringTextComponent(TextFormatting.AQUA + "The global countdown timer has been set to " + i + " seconds."));
+                                                Server.chatToAll(new StringTextComponent(TextFormatting.AQUA + "Your countdown countdown timer has been set to " + i + " seconds."));
                                             }
                                             return 0;
                                         })
