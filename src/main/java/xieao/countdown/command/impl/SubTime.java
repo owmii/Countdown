@@ -22,13 +22,14 @@ public class SubTime {
                                 .then(Commands.argument("seconds", IntegerArgumentType.integer(0, TimeData.MAX_TIME))
                                         .executes(context -> {
                                             ServerPlayerEntity player = (ServerPlayerEntity) context.getArgument("player", EntitySelector.class).selectOne(context.getSource());
-                                            if (!Config.GENERAL.isGlobal.get()) {
+                                            if (Config.GENERAL.isGlobal.get()) {
+                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "You can't add time to a single player in globale moder!"));
+                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "try: /countdown time add all <seconds>"));
+                                            } else {
                                                 TimeData timeData = Server.getData(TimeData::new);
                                                 int i = IntegerArgumentType.getInteger(context, "seconds");
                                                 timeData.addPlayerTime(player.getUniqueID(), i, true);
-                                            } else {
-                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "You can't add time to a single player in globale mode!"));
-                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "try: /countdown add all <seconds>"));
+                                                player.sendMessage(new StringTextComponent(TextFormatting.AQUA + "Added " + i + " seconds to your countdown timer!"));
                                             }
                                             return 0;
                                         })
@@ -38,10 +39,15 @@ public class SubTime {
                                         .executes(context -> {
                                             int i = IntegerArgumentType.getInteger(context, "seconds");
                                             TimeData timeData = Server.getData(TimeData::new);
-                                            timeData.addGlobalTime(i, true);
-                                            timeData.playersCountdown.forEach((uuid, aLong) -> {
-                                                timeData.addPlayerTime(uuid, i, true);
-                                            });
+                                            if (Config.GENERAL.isGlobal.get()) {
+                                                timeData.addGlobalTime(i, true);
+                                                Server.chatToAll(new StringTextComponent(TextFormatting.AQUA + "Added " + i + " seconds to the global countdown timer!"));
+                                            } else {
+                                                timeData.playersCountdown.forEach((uuid, aLong) -> {
+                                                    timeData.addPlayerTime(uuid, i, true);
+                                                });
+                                                Server.chatToAll(new StringTextComponent(TextFormatting.AQUA + "Added " + i + " seconds to your countdown timer!"));
+                                            }
                                             return 0;
                                         })
                                 ))
@@ -51,13 +57,14 @@ public class SubTime {
                                 .then(Commands.argument("seconds", IntegerArgumentType.integer(0, TimeData.MAX_TIME))
                                         .executes(context -> {
                                             ServerPlayerEntity player = (ServerPlayerEntity) context.getArgument("player", EntitySelector.class).selectOne(context.getSource());
-                                            if (!Config.GENERAL.isGlobal.get()) {
+                                            if (Config.GENERAL.isGlobal.get()) {
+                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "You can't remove time to a single player in globale mode!"));
+                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "try: /countdown time remove all <seconds>"));
+                                            } else {
                                                 TimeData timeData = Server.getData(TimeData::new);
                                                 int i = IntegerArgumentType.getInteger(context, "seconds");
                                                 timeData.addPlayerTime(player.getUniqueID(), -i, true);
-                                            } else {
-                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "You can't remove time to a single player in globale mode!"));
-                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "try: /countdown remove all <seconds>"));
+                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "Removed " + i + " seconds from your countdown timer!"));
                                             }
                                             return 0;
                                         })
@@ -67,10 +74,15 @@ public class SubTime {
                                         .executes(context -> {
                                             int i = IntegerArgumentType.getInteger(context, "seconds");
                                             TimeData timeData = Server.getData(TimeData::new);
-                                            timeData.addGlobalTime(-i, true);
-                                            timeData.playersCountdown.forEach((uuid, aLong) -> {
-                                                timeData.addPlayerTime(uuid, -i, true);
-                                            });
+                                            if (Config.GENERAL.isGlobal.get()) {
+                                                timeData.addGlobalTime(-i, true);
+                                                Server.chatToAll(new StringTextComponent(TextFormatting.RED + "Removed " + i + " seconds from the global countdown timer!"));
+                                            } else {
+                                                timeData.playersCountdown.forEach((uuid, aLong) -> {
+                                                    timeData.addPlayerTime(uuid, -i, true);
+                                                });
+                                                Server.chatToAll(new StringTextComponent(TextFormatting.RED + "Removed " + i + " seconds from your countdown timer!"));
+                                            }
                                             return 0;
                                         })
                                 ))
@@ -80,13 +92,14 @@ public class SubTime {
                                 .then(Commands.argument("seconds", IntegerArgumentType.integer(0, TimeData.MAX_TIME))
                                         .executes(context -> {
                                             ServerPlayerEntity player = (ServerPlayerEntity) context.getArgument("player", EntitySelector.class).selectOne(context.getSource());
-                                            if (!Config.GENERAL.isGlobal.get()) {
+                                            if (Config.GENERAL.isGlobal.get()) {
+                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "You can't set time to a single player in globale mode!"));
+                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "try: /countdown time set all <seconds>"));
+                                            } else {
                                                 TimeData timeData = Server.getData(TimeData::new);
                                                 int i = IntegerArgumentType.getInteger(context, "seconds");
                                                 timeData.setPlayerTime(player.getUniqueID(), i, true);
-                                            } else {
-                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "You can't load time to a single player in globale mode!"));
-                                                player.sendMessage(new StringTextComponent(TextFormatting.RED + "try: /countdown set all <seconds>"));
+                                                player.sendMessage(new StringTextComponent(TextFormatting.AQUA + "Your countdown timer has been set to " + i + " seconds."));
                                             }
                                             return 0;
                                         })
@@ -96,10 +109,15 @@ public class SubTime {
                                         .executes(context -> {
                                             int i = IntegerArgumentType.getInteger(context, "seconds");
                                             TimeData timeData = Server.getData(TimeData::new);
-                                            timeData.setGlobalTime(i, true);
-                                            timeData.playersCountdown.forEach((uuid, aLong) -> {
-                                                timeData.setPlayerTime(uuid, i, true);
-                                            });
+                                            if (Config.GENERAL.isGlobal.get()) {
+                                                timeData.setGlobalTime(i, true);
+                                                Server.chatToAll(new StringTextComponent(TextFormatting.AQUA + "Your countdown timer has been set to " + i + " seconds."));
+                                            } else {
+                                                timeData.playersCountdown.forEach((uuid, aLong) -> {
+                                                    timeData.setPlayerTime(uuid, i, true);
+                                                });
+                                                Server.chatToAll(new StringTextComponent(TextFormatting.AQUA + "The global countdown timer has been set to " + i + " seconds."));
+                                            }
                                             return 0;
                                         })
                                 ))
