@@ -29,7 +29,7 @@ public class SubTime {
                                                 TimeData timeData = Server.getData(TimeData::new);
                                                 int i = IntegerArgumentType.getInteger(context, "seconds");
                                                 timeData.addPlayerTime(player.getUniqueID(), i, true);
-                                                player.sendMessage(new StringTextComponent(TextFormatting.AQUA + "Added " + i + " seconds to your countdown timer!"));
+                                                player.sendMessage(new StringTextComponent(TextFormatting.DARK_AQUA + "Added " + i + " seconds to your countdown timer!"));
                                             }
                                             return 0;
                                         })
@@ -41,12 +41,12 @@ public class SubTime {
                                             TimeData timeData = Server.getData(TimeData::new);
                                             if (Config.GENERAL.isGlobal.get()) {
                                                 timeData.addGlobalTime(i, true);
-                                                Server.chatToAll(new StringTextComponent(TextFormatting.AQUA + "Added " + i + " seconds to the global countdown timer!"));
+                                                Server.chatToAll((player, texts) -> texts.add(new StringTextComponent(TextFormatting.DARK_AQUA + "Added " + i + " seconds to the global countdown timer!")));
                                             } else {
                                                 timeData.playersCountdown.forEach((uuid, aLong) -> {
                                                     timeData.addPlayerTime(uuid, i, true);
                                                 });
-                                                Server.chatToAll(new StringTextComponent(TextFormatting.AQUA + "Added " + i + " seconds to your countdown timer!"));
+                                                Server.chatToAll((player, texts) -> texts.add(new StringTextComponent(TextFormatting.DARK_AQUA + "Added " + i + " seconds to your countdown timer!")));
                                             }
                                             return 0;
                                         })
@@ -76,12 +76,12 @@ public class SubTime {
                                             TimeData timeData = Server.getData(TimeData::new);
                                             if (Config.GENERAL.isGlobal.get()) {
                                                 timeData.addGlobalTime(-i, true);
-                                                Server.chatToAll(new StringTextComponent(TextFormatting.RED + "Removed " + i + " seconds from the global countdown timer!"));
+                                                Server.chatToAll((player, texts) -> texts.add(new StringTextComponent(TextFormatting.RED + "Removed " + i + " seconds from the global countdown timer!")));
                                             } else {
                                                 timeData.playersCountdown.forEach((uuid, aLong) -> {
                                                     timeData.addPlayerTime(uuid, -i, true);
                                                 });
-                                                Server.chatToAll(new StringTextComponent(TextFormatting.RED + "Removed " + i + " seconds from your countdown timer!"));
+                                                Server.chatToAll((player, texts) -> texts.add(new StringTextComponent(TextFormatting.RED + "Removed " + i + " seconds from your countdown timer!")));
                                             }
                                             return 0;
                                         })
@@ -99,7 +99,7 @@ public class SubTime {
                                                 TimeData timeData = Server.getData(TimeData::new);
                                                 int i = IntegerArgumentType.getInteger(context, "seconds");
                                                 timeData.setPlayerTime(player.getUniqueID(), i, true);
-                                                player.sendMessage(new StringTextComponent(TextFormatting.AQUA + "Your countdown timer has been set to " + i + " seconds."));
+                                                player.sendMessage(new StringTextComponent(TextFormatting.DARK_AQUA + "Your countdown timer has been set to " + i + " seconds."));
                                             }
                                             return 0;
                                         })
@@ -111,12 +111,12 @@ public class SubTime {
                                             TimeData timeData = Server.getData(TimeData::new);
                                             if (Config.GENERAL.isGlobal.get()) {
                                                 timeData.setGlobalTime(i, true);
-                                                Server.chatToAll(new StringTextComponent(TextFormatting.AQUA + "The global timer has been set to " + i + " seconds."));
+                                                Server.chatToAll((player, texts) -> texts.add(new StringTextComponent(TextFormatting.DARK_AQUA + "The global timer has been set to " + i + " seconds.")));
                                             } else {
                                                 timeData.playersCountdown.forEach((uuid, aLong) -> {
                                                     timeData.setPlayerTime(uuid, i, true);
                                                 });
-                                                Server.chatToAll(new StringTextComponent(TextFormatting.AQUA + "Your countdown countdown timer has been set to " + i + " seconds."));
+                                                Server.chatToAll((player, texts) -> texts.add(new StringTextComponent(TextFormatting.DARK_AQUA + "Your countdown countdown timer has been set to " + i + " seconds.")));
                                             }
                                             return 0;
                                         })
