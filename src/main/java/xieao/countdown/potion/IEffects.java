@@ -15,6 +15,7 @@ public class IEffects {
     public static final List<Effect> EFFECTS = new ArrayList<>();
     public static final Effect PAUSE = register("pause", new EffectBase(EffectType.BENEFICIAL, 13458603));
     public static final Effect SLOW_DOWN = register("slow_down", new EffectBase(EffectType.BENEFICIAL, 4521796));
+    public static final Effect FAST_FORWARD = register("fast_forward", new EffectBase(EffectType.HARMFUL, 16711680));
 
     static <T extends Effect> T register(String name, T effect) {
         effect.setRegistryName(name);

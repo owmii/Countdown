@@ -1,6 +1,13 @@
 {
   "effect.countdown.pause": "Pause",
   "effect.countdown.slow_down": "Slow Down",
+  "effect.countdown.fast_forward": "Fast Forward",
+  "block.countdown.time_plus": "Time Plus",
+  "block.countdown.pause": "Pause",
+  "block.countdown.slow_down": "Slow Down",
+  "item.minecraft.tipped_arrow.effect.pause": "Pause Arrow",
+  "item.minecraft.tipped_arrow.effect.slow_down": "Slow Down Arrow",
+  "item.minecraft.tipped_arrow.effect.fast_forward": "Arrow of Fast Forward",
   "item.minecraft.potion.effect.pause": "Pause Potion",
   "item.minecraft.splash_potion.effect.pause": "Splash Pause Potion",
   "item.minecraft.lingering_potion.effect.pause": "Lingering Pause Potion",

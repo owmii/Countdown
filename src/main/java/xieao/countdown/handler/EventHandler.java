@@ -74,8 +74,14 @@ public class EventHandler {
                                 speed += (10 * effectInstance.getAmplifier() + 1);
                             }
                         }
+                        if (player.isPotionActive(IEffects.FAST_FORWARD)) {
+                            EffectInstance effectInstance = player.getActivePotionEffect(IEffects.FAST_FORWARD);
+                            if (effectInstance != null) {
+                                speed -= (5 * (effectInstance.getAmplifier() + 1));
+                            }
+                        }
 
-                        if (time > 0 && player.world.getGameTime() % speed == 0) {
+                        if (time > 0 && player.world.getGameTime() % Math.max(speed, 1) == 0) {
                             timeData.addPlayerTime(id, -1, true);
                         } else if (time <= 0) {
                             gameOver(player, time);
@@ -127,12 +133,18 @@ public class EventHandler {
                     if (player.isPotionActive(IEffects.SLOW_DOWN)) {
                         EffectInstance effectInstance = player.getActivePotionEffect(IEffects.SLOW_DOWN);
                         if (effectInstance != null) {
-                            speed += (10 * effectInstance.getAmplifier() + 1);
+                            speed += (10 * (effectInstance.getAmplifier() + 1));
+                        }
+                    }
+                    if (player.isPotionActive(IEffects.FAST_FORWARD)) {
+                        EffectInstance effectInstance = player.getActivePotionEffect(IEffects.FAST_FORWARD);
+                        if (effectInstance != null) {
+                            speed -= (5 * (effectInstance.getAmplifier() + 1));
                         }
                     }
                 }
 
-                int finalSpeed = speed;
+                int finalSpeed = Math.max(speed, 1);
                 Server.getWorld(0).ifPresent(world -> {
                     if (world.getGameTime() % finalSpeed == 0) {
                         timeData.addGlobalTime(-1, true);

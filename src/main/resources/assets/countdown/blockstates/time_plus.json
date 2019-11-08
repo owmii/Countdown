@@ -1,0 +1,5 @@
+{
+  "variants": {
+	"": {"model": "countdown:block/time_plus"}
+  }
+}

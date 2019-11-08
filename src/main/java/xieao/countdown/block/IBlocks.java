@@ -1,6 +1,7 @@
 package xieao.countdown.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
@@ -16,10 +17,14 @@ import java.util.List;
 public class IBlocks {
     public static final List<BlockItem> BLOCK_ITEMS = new ArrayList<>();
     public static final List<Block> BLOCKS = new ArrayList<>();
-    //  public static final Block GLIOPHIN;
+    public static final Block TIME_PLUS;
+    public static final Block SLOW_DOWN;
+    public static final Block PAUSE;
 
     static {
-        // GLIOPHIN = register("gliophin", new LiquidBlock(Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F)));
+        TIME_PLUS = register("time_plus", new TimeBlock(Block.Properties.create(Material.CARPET).lightValue(3).doesNotBlockMovement(), 0xa1ff00));
+        SLOW_DOWN = register("slow_down", new TimeBlock(Block.Properties.create(Material.CARPET).lightValue(3).doesNotBlockMovement(), 0xffd500));
+        PAUSE = register("pause", new TimeBlock(Block.Properties.create(Material.CARPET).lightValue(3).doesNotBlockMovement(), 0xff9500));
     }
 
     static <T extends Block & IBlockBase> T register(String name, T block) {
