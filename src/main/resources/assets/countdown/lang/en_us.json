@@ -14,6 +14,9 @@
   "item.minecraft.potion.effect.slow_down": "Slow Down Potion",
   "item.minecraft.splash_potion.effect.slow_down": "Splash Slow Down Potion",
   "item.minecraft.lingering_potion.effect.slow_down": "Lingering Slow Down Potion",
+  "item.minecraft.potion.effect.fast_forward": "Fast Forward Potion",
+  "item.minecraft.splash_potion.effect.fast_forward": "Splash Fast Forward Potion",
+  "item.minecraft.lingering_potion.effect.fast_forward": "Lingering Fast Forward Potion",
   "message.countdown.gameover": "Oops's, Game Over!! :(",
   "category.countdown": "Countdown",
   "keybind.hud.settings": "Hud Settings"
