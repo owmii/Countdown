@@ -58,9 +58,9 @@ public class TimeBlock extends BlockBase {
                     entityIn.sendMessage(new StringTextComponent(TextFormatting.DARK_AQUA + "Added " + i + " seconds to your countdown timer!"));
                 }
             } else if (this == IBlocks.PAUSE) {
-                ((PlayerEntity) entityIn).addPotionEffect(new EffectInstance(IEffects.PAUSE, 200 + rand.nextInt(9800), 0));
+                ((PlayerEntity) entityIn).addPotionEffect(new EffectInstance(IEffects.PAUSE, 200 + rand.nextInt(9800), 0, false, false));
             } else if (this == IBlocks.SLOW_DOWN) {
-                ((PlayerEntity) entityIn).addPotionEffect(new EffectInstance(IEffects.SLOW_DOWN, 200 + rand.nextInt(9800), rand.nextInt(4)));
+                ((PlayerEntity) entityIn).addPotionEffect(new EffectInstance(IEffects.SLOW_DOWN, 200 + rand.nextInt(9800), rand.nextInt(4), false, false));
             }
             worldIn.removeBlock(pos, false);
         }
