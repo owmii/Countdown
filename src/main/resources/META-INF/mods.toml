@@ -7,7 +7,7 @@ modId="countdown"
 version="${file.jarVersion}"
 displayName="Countdown"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/countdown"
-authors="xieao"
+authors="zeroneye"
 description='''
 Like hardcore but limited time instead of limited lifes.
 '''
