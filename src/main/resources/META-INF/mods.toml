@@ -1,6 +1,6 @@
 modLoader="javafml" 
 loaderVersion="[28,)"
-issueTrackerURL="https://github.com/xieaoDev/countdown/issues"
+issueTrackerURL="https://github.com/zeroneye/countdown/issues"
 
 [[mods]]
 modId="countdown"
