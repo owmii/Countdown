@@ -2,6 +2,7 @@ package zeroneye.countdown.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
@@ -52,10 +53,10 @@ public class TimeBlock extends BlockBase {
                 int i = rand.nextInt(Config.GENERAL.timePlusMin.get() + (Config.GENERAL.timePlusMax.get() - Config.GENERAL.timePlusMin.get()));
                 if (Config.GENERAL.isGlobal.get()) {
                     timeData.addGlobalTime(i, true);
-                    Server.chatToAll((player, texts) -> texts.add(new StringTextComponent(TextFormatting.DARK_AQUA + "Added " + i + " seconds to the global countdown timer!")));
+                    Server.chatToAll((player, texts) -> texts.add(new StringTextComponent(TextFormatting.DARK_AQUA + I18n.format("message.countdown.added.global", i))));
                 } else {
                     timeData.addPlayerTime(entityIn.getUniqueID(), i, true);
-                    entityIn.sendMessage(new StringTextComponent(TextFormatting.DARK_AQUA + "Added " + i + " seconds to your countdown timer!"));
+                    entityIn.sendMessage(new StringTextComponent(TextFormatting.DARK_AQUA + I18n.format("message.countdown.added.player", i)));
                 }
             } else if (this == IBlocks.PAUSE) {
                 ((PlayerEntity) entityIn).addPotionEffect(new EffectInstance(IEffects.PAUSE, 200 + rand.nextInt(9800), 0, false, false));
