@@ -2,7 +2,6 @@ package zeroneye.countdown.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
@@ -11,8 +10,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IEnviromentBlockReader;
 import net.minecraft.world.IWorldReader;
@@ -26,6 +23,7 @@ import zeroneye.lib.block.BlockBase;
 import zeroneye.lib.client.particle.Effect;
 import zeroneye.lib.client.particle.Effects;
 import zeroneye.lib.util.Server;
+import zeroneye.lib.util.Text;
 import zeroneye.lib.util.math.V3d;
 
 import java.util.Random;
@@ -53,10 +51,10 @@ public class TimeBlock extends BlockBase {
                 int i = rand.nextInt(Config.GENERAL.timePlusMin.get() + (Config.GENERAL.timePlusMax.get() - Config.GENERAL.timePlusMin.get()));
                 if (Config.GENERAL.isGlobal.get()) {
                     timeData.addGlobalTime(i, true);
-                    Server.chatToAll((player, texts) -> texts.add(new StringTextComponent(TextFormatting.DARK_AQUA + I18n.format("message.countdown.added.global", i))));
+                    Server.chatToAll((player, texts) -> texts.add(Text.format("message.countdown.added.global", i)));
                 } else {
                     timeData.addPlayerTime(entityIn.getUniqueID(), i, true);
-                    entityIn.sendMessage(new StringTextComponent(TextFormatting.DARK_AQUA + I18n.format("message.countdown.added.player", i)));
+                    entityIn.sendMessage(Text.format("message.countdown.added.player", i));
                 }
             } else if (this == IBlocks.PAUSE) {
                 ((PlayerEntity) entityIn).addPotionEffect(new EffectInstance(IEffects.PAUSE, 200 + rand.nextInt(9800), 0, false, false));
