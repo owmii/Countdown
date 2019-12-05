@@ -12,12 +12,12 @@ description='''
 Like hardcore but limited time instead of limited lifes.
 '''
 
-#[[dependencies.countdown]]
-#    modId="lollipop"
-#    mandatory=true
-#    versionRange="[0.0.4,)"
-#    ordering="NONE"
-#    side="BOTH"
+[[dependencies.countdown]]
+    modId="lollipop"
+    mandatory=true
+    versionRange="[0.0.13,)"
+    ordering="NONE"
+    side="BOTH"
 
 [[dependencies.countdown]]
     modId="forge"

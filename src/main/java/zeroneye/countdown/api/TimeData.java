@@ -17,7 +17,7 @@ public class TimeData extends WorldSavedData {
     public final List<UUID> playerSync = new ArrayList<>();
     public static long globalDefault;
     public long globalCountdown = globalDefault;
-    public boolean globalSync;
+    public static boolean globalSync;
 
     public TimeData() {
         super("countdown_data");
@@ -49,7 +49,7 @@ public class TimeData extends WorldSavedData {
 
     public void setGlobalTime(long time, boolean sync) {
         this.globalCountdown = Math.max(0, Math.min(time, MAX_TIME));
-        this.globalSync = sync;
+        globalSync = sync;
         markDirty();
     }
 

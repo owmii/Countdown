@@ -39,7 +39,7 @@ public class EventHandler {
                     timeData.playerSync.add(event.getPlayer().getUniqueID());
                 }
             } else {
-                timeData.globalSync = true;
+                TimeData.globalSync = true;
             }
         }
     }
@@ -113,13 +113,14 @@ public class EventHandler {
             TimeData timeData = Server.getData(TimeData::new);
             long time = timeData.globalCountdown;
 
-            if (timeData.globalSync) {
+            if (TimeData.globalSync) {
                 Lollipop.NET.toAll(new SetTime(time));
                 for (PlayerEntity player : Server.get().getPlayerList().getPlayers()) {
                     if (time > 0 && player.isSpectator()) {
                         player.setGameType(GameType.SURVIVAL);
                     }
                 }
+                TimeData.globalSync = false;
             }
 
             CountdownEvent.Global countdownEvent = new CountdownEvent.Global(time);

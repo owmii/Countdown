@@ -6,10 +6,11 @@ import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.command.arguments.EntitySelector;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import zeroneye.countdown.api.TimeData;
 import zeroneye.countdown.config.Config;
 import zeroneye.lib.util.Server;
-import zeroneye.lib.util.Text;
 
 public class SubRestart {
     public static ArgumentBuilder<CommandSource, ?> register() {
@@ -19,12 +20,12 @@ public class SubRestart {
                         .executes(context -> {
                             ServerPlayerEntity player = (ServerPlayerEntity) context.getArgument("player", EntitySelector.class).selectOne(context.getSource());
                             if (Config.GENERAL.isGlobal.get()) {
-                                player.sendMessage(Text.format("message.countdown.no.restart"));
-                                player.sendMessage(Text.format("message.countdown.try", ": /countdown restart all"));
+                                player.sendMessage(new TranslationTextComponent("message.countdown.no.restart").applyTextStyle(TextFormatting.RED));
+                                player.sendMessage(new TranslationTextComponent("message.countdown.try", ": /countdown restart all").applyTextStyle(TextFormatting.RED));
                             } else {
                                 TimeData timeData = Server.getData(TimeData::new);
                                 timeData.playersCountdown.put(player.getUniqueID(), Config.GENERAL.time.get());
-                                player.sendMessage(Text.format("message.countdown.restarted.player"));
+                                player.sendMessage(new TranslationTextComponent("message.countdown.restarted.player").applyTextStyle(TextFormatting.DARK_AQUA));
                             }
                             return 0;
                         }))
@@ -33,12 +34,12 @@ public class SubRestart {
                             TimeData timeData = Server.getData(TimeData::new);
                             if (Config.GENERAL.isGlobal.get()) {
                                 timeData.setGlobalTime(Config.GENERAL.time.get(), true);
-                                Server.chatToAll((player, texts) -> texts.add(Text.format("message.countdown.restarted.global")));
+                                Server.chatToAll((player, texts) -> texts.add(new TranslationTextComponent("message.countdown.restarted.global").applyTextStyle(TextFormatting.DARK_AQUA)));
                             } else {
                                 timeData.playersCountdown.forEach((uuid, aLong) -> {
                                     timeData.playersCountdown.put(uuid, Config.GENERAL.time.get());
                                 });
-                                Server.chatToAll((player, texts) -> texts.add(Text.format("message.countdown.restarted.player")));
+                                Server.chatToAll((player, texts) -> texts.add(new TranslationTextComponent("message.countdown.restarted.player").applyTextStyle(TextFormatting.DARK_AQUA)));
                             }
                             return 0;
                         }));
